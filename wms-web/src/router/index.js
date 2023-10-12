@@ -20,7 +20,7 @@ const routes = [
                 },
                 component:()=>import('../components/Home')
             },
-            {
+            /*{
                 path:'/Admin',
                 name:'admin',
                 meta:{
@@ -35,7 +35,7 @@ const routes = [
                     title:'用户管理'
                 },
                 component:()=>import('../components/user/UserManage.vue')
-            },
+            },*/
         ]
     },
 ]

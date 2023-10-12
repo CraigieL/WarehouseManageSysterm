@@ -55,7 +55,7 @@
                                 //存储
                                 //sessionStorage.setItem("CurUser",JSON.stringify(res.data)) UserController修改后，CurUser中的值产生了变化
                                 sessionStorage.setItem("CurUser",JSON.stringify(res.data.user))
-
+                                //生成路由
                                 console.log(res.data.menu)
                                 this.$store.commit("setMenu",res.data.menu)
 
