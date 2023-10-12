@@ -2,7 +2,7 @@ import vue from 'vue'
 import Vuex from 'vuex'
 import router,{resetRouter} from "../router";
 vue.use(Vuex)
-
+import createPersistedState from 'vuex-persistedstate'
 //动态路由
 function addNewRoute(menuList) {
     console.log(menuList)
@@ -38,6 +38,10 @@ export default new Vuex.Store({
     mutations: {
         setMenu(state,menuList) {
             state.menu = menuList
+            //添加路由
+            addNewRoute(menuList)
+        },
+        setRouter(state,menuList) {
 
             addNewRoute(menuList)
         }
@@ -46,5 +50,6 @@ export default new Vuex.Store({
         getMenu(state) {
             return state.menu
         }
-    }
+    },
+    plugins:[createPersistedState()]
 })
