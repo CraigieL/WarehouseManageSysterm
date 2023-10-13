@@ -19,7 +19,7 @@ export default {
     '$store.state.menu':{
       handler(val,old){
         console.log(val,old)
-        //旧的数据没有的情况下，且现在用户有，现在用户的账户有的情况下
+        //旧的数据没有的情况下，且现在用户有，现在用户的账户有的情况下设置路由
         if(!old && this.user && this.user.account){
           this.$store.commit("setRouter",val)
         }
