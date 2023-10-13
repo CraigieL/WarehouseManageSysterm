@@ -1,38 +1,38 @@
 <template>
     <div style="text-align: center;background-color: #f1f1f3;height: 100%;padding: 0px;margin: 0px;">
-        <h1 style="font-size: 50px;">{{'欢迎你！'+user.name}}</h1>
-        <el-descriptions  title="个人中心" :column="2" size="40" border>
+        <h1 style="font-size: 50px;">{{'ようこそ！'+user.name}}</h1>
+        <el-descriptions  title="パーソナルセンター" :column="2" size="40" border>
             <el-descriptions-item>
                 <template slot="label">
                   <i class="el-icon-s-custom"></i>
-                  账号
+                  アカウント
                 </template>
                 {{user.account}}
             </el-descriptions-item>
             <el-descriptions-item>
                 <template slot="label">
                   <i class="el-icon-mobile-phone"></i>
-                  电话
+                  電話
                 </template>
                 {{user.phone}}
             </el-descriptions-item>
             <el-descriptions-item>
                 <template slot="label">
                   <i class="el-icon-location-outline"></i>
-                  性别
+                  性別
                 </template>
                 <el-tag
                     :type="user.sex === '1' ? 'primary' : 'danger'"
-                    disable-transitions><i :class="user.sex==1?'el-icon-male':'el-icon-female'"></i>{{user.sex==1?"男":"女"}}</el-tag>
+                    disable-transitions><i :class="user.sex==1?'el-icon-male':'el-icon-female'"></i>{{user.sex==1?"男性":"女性"}}</el-tag>
             </el-descriptions-item>
             <el-descriptions-item>
                 <template slot="label">
                   <i class="el-icon-tickets"></i>
-                  角色
+                  ロール
                 </template>
                 <el-tag
                     type="success"
-                    disable-transitions>{{user.roleId==0?"超级管理员":(user.roleId==1?"管理员":"用户")}}</el-tag>
+                    disable-transitions>{{user.roleId==0?"スーパー管理者":(user.roleId==1?"管理者":"用者")}}</el-tag>
 
             </el-descriptions-item>
         </el-descriptions>

@@ -27,7 +27,7 @@ import java.util.HashMap;
 @RequestMapping("/goods")
 public class GoodsController {
 
-   @Autowired
+    @Autowired
     private GoodsService goodsService;
     //新增
     @PostMapping("/save")

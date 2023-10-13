@@ -1,9 +1,9 @@
 <template>
     <div>
         <div style="margin: 5px">
-            <el-input v-model="name" placeholder="请输入物品名" suffix-icon="el-icon-search" style="width: 180px;margin-left: -4px"
+            <el-input v-model="name" placeholder="商品名を入力してください" suffix-icon="el-icon-search" style="width: 180px;margin-left: -4px"
                       @keyup.enter.native="loadPost"></el-input>
-            <el-select v-model="storage" placeholder="请选择仓库" style="margin-left: 5px;">
+            <el-select v-model="storage" placeholder="倉庫を選択してください" style="margin-left: 5px;">
                 <el-option
                         v-for="item in storageData"
                         :key="item.id"
@@ -11,7 +11,7 @@
                         :value="item.id">
                 </el-option>
             </el-select>
-            <el-select v-model="goodstype" placeholder="请选择分类" style="margin-left: 5px;">
+            <el-select v-model="goodstype" placeholder="分類を選択してください" style="margin-left: 5px;">
                 <el-option
                         v-for="item in goodstypeData"
                         :key="item.id"
@@ -20,29 +20,29 @@
                 </el-option>
             </el-select>
 
-            <el-button type="primary" style="margin-left: 18px;margin-right: 6px" @click="loadPost">查询</el-button>
-            <el-button type="success" @click="resetParam">重置</el-button>
+            <el-button type="primary" style="margin-left: 18px;margin-right: 6px" @click="loadPost">照会</el-button>
+            <el-button type="success" @click="resetParam">リセット</el-button>
         </div>
         <el-table :data="tableData"
                 :header-cell-style="{ background: '#f2f5fc', color: '#555555' }"
                 border>
             <el-table-column prop="id" label="ID" width="60">
             </el-table-column>
-            <el-table-column prop="goodsname" label="物品名" width="80">
+            <el-table-column prop="goodsname" label="商品名" width="80">
             </el-table-column>
-            <el-table-column prop="storagename" label="仓库" width="80">
+            <el-table-column prop="storagename" label="倉庫" width="80">
             </el-table-column>
-            <el-table-column prop="goodstypename" label="分类" width="80">
+            <el-table-column prop="goodstypename" label="分類" width="80">
             </el-table-column>
-            <el-table-column prop="adminname" label="操作人" width="120">
+            <el-table-column prop="adminname" label="操作者" width="160">
             </el-table-column>
-            <el-table-column prop="username" label="申请人" width="120">
+            <el-table-column prop="username" label="申請者" width="120">
             </el-table-column>
             <el-table-column prop="count" label="数量" width="80">
             </el-table-column>
-            <el-table-column prop="createtime" label="操作时间" width="180">
+            <el-table-column prop="createtime" label="操作時間" width="180">
             </el-table-column>
-            <el-table-column prop="remark" label="备注" >
+            <el-table-column prop="remark" label="備考" >
             </el-table-column>
         </el-table>
 
@@ -105,13 +105,13 @@
                 this.$refs.form.resetFields();
             },
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                console.log(`ページごと ${val} 項目`);
                 this.pageNum=1
                 this.pageSize=val
                 this.loadPost()
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                console.log(`現在のページ: ${val}`);
                 this.pageNum=val
                 this.loadPost()
             },
@@ -137,7 +137,7 @@
                         this.tableData=res.data
                         this.total=res.total
                     }else{
-                        alert('获取数据失败')
+                        alert('データの取得に失敗しました')
                     }
                 })
             },
@@ -147,7 +147,7 @@
                     if(res.code==200){
                         this.storageData=res.data
                     }else{
-                        alert('获取数据失败')
+                        alert('データの取得に失敗しました')
                     }
 
                 })
@@ -158,7 +158,7 @@
                     if(res.code==200){
                         this.goodstypeData=res.data
                     }else{
-                        alert('获取数据失败')
+                        alert('データの取得に失敗しました')
                     }
 
                 })

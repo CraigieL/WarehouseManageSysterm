@@ -2,19 +2,19 @@
     <div class="loginBody">
         <div class="loginDiv">
             <div class="login-content">
-                <h1 class="login-title">用户登录</h1>
+                <h1 class="login-title">ユーザーログイン</h1>
                 <el-form :model="loginForm" label-width="100px"
                          :rules="rules" ref="loginForm">
-                    <el-form-item label="账号" prop="account">
-                        <el-input style="width: 200px" type="text" v-model="loginForm.account"
+                    <el-form-item label="アカウント" prop="account">
+                        <el-input style="width: 180px" type="text" v-model="loginForm.account"
                                   autocomplete="off" size="small"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码" prop="password">
-                        <el-input style="width: 200px" type="password" v-model="loginForm.password"
+                    <el-form-item label="パスワード" prop="password">
+                        <el-input style="width: 180px" type="password" v-model="loginForm.password"
                                   show-password autocomplete="off" size="small" @keyup.enter.native="confirm"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="confirm" :disabled="confirm_disabled">确 定</el-button>
+                        <el-button type="primary" @click="confirm" :disabled="confirm_disabled">確 認</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -35,10 +35,10 @@
                 },
                 rules:{
                     account: [
-                      { required: true, message: '请输入账号', trigger: 'blur' }
+                      { required: true, message: 'アカウントを入力してください', trigger: 'blur' }
                     ],
                     password: [
-                      { required: true, message: '请输密码', trigger: 'blur' }
+                      { required: true, message: 'パスワードを入力してください', trigger: 'blur' }
                     ],
                 }
             }
@@ -63,13 +63,13 @@
                                 this.$router.replace('/Index');
                             }else{
                                 this.confirm_disabled=false;
-                                alert('校验失败，用户名或密码错误！');
+                                alert('認証に失敗しました、ユーザー名またはパスワードが間違っています！');
                                 return false;
                             }
                         });
                     } else {
                         this.confirm_disabled=false;
-                        console.log('校验失败');
+                        console.log('認証に失敗');
                         return false;
                     }
                 });
@@ -84,17 +84,19 @@
         width: 100%;
         height: 100%;
         background-color: #B3C0D1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .loginDiv {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top: -200px;
-        margin-left: -225px;
         width: 450px;
         height: 330px;
         background: #fff;
         border-radius: 5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     .login-title {
         margin: 20px 0;
@@ -103,8 +105,12 @@
     .login-content {
         width: 400px;
         height: 250px;
-        position: absolute;
-        top: 25px;
-        left: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    el-form, el-form-item {
+        text-align: center;
     }
 </style>

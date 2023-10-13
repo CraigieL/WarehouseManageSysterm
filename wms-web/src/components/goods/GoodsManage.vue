@@ -1,9 +1,9 @@
 <template>
     <div>
         <div style="margin: 5px">
-            <el-input v-model="name" placeholder="请输入物品名" suffix-icon="el-icon-search" style="width: 180px;margin-left: -4px"
+            <el-input v-model="name" placeholder="商品名を入力してください" suffix-icon="el-icon-search" style="width: 180px;margin-left: -4px"
                       @keyup.enter.native="loadPost"></el-input>
-            <el-select v-model="storage" placeholder="请选择仓库" style="margin-left: 5px;">
+            <el-select v-model="storage" placeholder="倉庫を選択してください" style="margin-left: 5px;">
                 <el-option
                         v-for="item in storageData"
                         :key="item.id"
@@ -11,7 +11,7 @@
                         :value="item.id">
                 </el-option>
             </el-select>
-            <el-select v-model="goodstype" placeholder="请选择分类" style="margin-left: 5px;">
+            <el-select v-model="goodstype" placeholder="分類を選択してください" style="margin-left: 5px;">
                 <el-option
                         v-for="item in goodstypeData"
                         :key="item.id"
@@ -20,12 +20,12 @@
                 </el-option>
             </el-select>
 
-            <el-button type="primary" style="margin-left: 18px;margin-right: 6px" @click="loadPost">查询</el-button>
-            <el-button type="success" @click="resetParam">重置</el-button>
-            <el-button type="primary" style="margin-left: 16px;margin-right: 6px" @click="add" v-if="user.roleId!=2">新增</el-button>
+            <el-button type="primary" style="margin-left: 18px;margin-right: 6px" @click="loadPost">照会</el-button>
+            <el-button type="success" @click="resetParam">リセット</el-button>
+            <el-button type="primary" style="margin-left: 16px;margin-right: 6px" @click="add" v-if="user.roleId!=2">追加</el-button>
 
-            <el-button type="primary" style="margin-left: 5px;" @click="inGoods" v-if="user.roleId!=2">入库</el-button>
-            <el-button type="primary" style="margin-left: 5px;" @click="outGoods" v-if="user.roleId!=2">出库</el-button>
+            <el-button type="primary" style="margin-left: 5px;" @click="inGoods" v-if="user.roleId!=2">入庫</el-button>
+            <el-button type="primary" style="margin-left: 5px;" @click="outGoods" v-if="user.roleId!=2">出庫</el-button>
 
         </div>
         <el-table :data="tableData"
@@ -36,25 +36,25 @@
         >
         <el-table-column prop="id" label="ID" width="60">
         </el-table-column>
-        <el-table-column prop="name" label="物品名" width="120">
+        <el-table-column prop="name" label="商品名" width="120">
         </el-table-column>
-        <el-table-column prop="storage" label="仓库" width="120" :formatter="formatStorage">
+        <el-table-column prop="storage" label="倉庫" width="120" :formatter="formatStorage">
         </el-table-column>
-        <el-table-column prop="goodstype" label="分类" width="120" :formatter="formatGoodstype">
+        <el-table-column prop="goodstype" label="分類" width="120" :formatter="formatGoodstype">
         </el-table-column>
         <el-table-column prop="count" label="数量" width="120">
         </el-table-column>
-        <el-table-column prop="remark" label="备注" >
+        <el-table-column prop="remark" label="備考" >
         </el-table-column>
         <el-table-column prop="operate" label="操作" v-if="user.roleId!=2">
             <template slot-scope="scope">
-                <el-button size="small" type="success" @click="modify(scope.row) ">编辑</el-button>
+                <el-button size="small" type="success" @click="modify(scope.row) ">編集</el-button>
                 <el-popconfirm
-                    title="确定删除吗？"
+                    title="削除してもよろしいですか？"
                     @confirm="del(scope.row.id)"
                     style="margin-left: 10px;"
                 >
-                <el-button slot="reference" size="small" type="danger">删除</el-button>
+                <el-button slot="reference" size="small" type="danger">削除</el-button>
                 </el-popconfirm>
             </template>
         </el-table-column>
@@ -71,20 +71,20 @@
         </el-pagination>
 
         <el-dialog
-            title="物品维护"
+            title="商品のメンテナンス"
             :visible.sync="centerDialogVisible"
             width="30%"
             center>
 
             <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-                <el-form-item label="物品名" prop="name">
+                <el-form-item label="商品名" prop="name">
                     <el-col :span="20">
                         <el-input v-model="form.name"></el-input>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="仓库" prop="storage">
+                <el-form-item label="倉庫" prop="storage">
                     <el-col :span="20">
-                        <el-select v-model="form.storage" placeholder="请选择仓库" style="margin-left: 5px;">
+                        <el-select v-model="form.storage" placeholder="倉庫を選択してください" style="margin-left: 5px;">
                             <el-option
                                     v-for="item in storageData"
                                     :key="item.id"
@@ -96,7 +96,7 @@
                 </el-form-item>
                 <el-form-item label="分类" prop="goodstype">
                     <el-col :span="20">
-                        <el-select v-model="form.goodstype" placeholder="请选择分类" style="margin-left: 5px;">
+                        <el-select v-model="form.goodstype" placeholder="分類を選択してください" style="margin-left: 5px;">
                             <el-option
                                     v-for="item in goodstypeData"
                                     :key="item.id"
@@ -111,7 +111,7 @@
                         <el-input v-model="form.count"></el-input>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="备注" prop="remark">
+                <el-form-item label="備考" prop="remark">
                     <el-col :span="20">
                         <el-input type="textarea" v-model="form.remark"></el-input>
                     </el-col>
@@ -119,37 +119,37 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-            <el-button @click="centerDialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="save">确 定</el-button>
+            <el-button @click="centerDialogVisible = false">キャンセル</el-button>
+            <el-button type="primary" @click="save">確定</el-button>
             </span>
         </el-dialog>
 
 
         <el-dialog
-                title="出入库"
+                title="入出庫"
                 :visible.sync="inDialogVisible"
                 width="30%"
                 center>
 
             <el-dialog
                     width="75%"
-                    title="用户选择"
+                    title="用者選択"
                     :visible.sync="innerVisible"
                     append-to-body>
                 <SelectUser @doSelectUser="doSelectUser"></SelectUser>
                 <span slot="footer" class="dialog-footer">
-                    <el-button @click="innerVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="confirmUser">确 定</el-button>
-                  </span>
+                    <el-button @click="innerVisible = false">キャンセル</el-button>
+                    <el-button type="primary" @click="confirmUser">確定</el-button>
+                </span>
             </el-dialog>
 
             <el-form ref="form1" :rules="rules1" :model="form1" label-width="80px">
-                <el-form-item label="物品名">
+                <el-form-item label="商品名">
                     <el-col :span="20">
                         <el-input v-model="form1.goodsname" readonly></el-input>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="申请人">
+                <el-form-item label="申請者">
                     <el-col :span="20">
                         <el-input v-model="form1.username" readonly @click.native="selectUser"></el-input>
                     </el-col>
@@ -159,15 +159,15 @@
                         <el-input v-model="form1.count"></el-input>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="备注" prop="remark">
+                <el-form-item label="備考" prop="remark">
                     <el-col :span="20">
                         <el-input type="textarea" v-model="form1.remark"></el-input>
                     </el-col>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="inDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="doInGoods">确 定</el-button>
+                <el-button @click="inDialogVisible = false">キャンセル</el-button>
+                <el-button type="primary" @click="doInGoods">確定</el-button>
             </span>
         </el-dialog>
 
@@ -182,7 +182,7 @@
             data() {
                 let checkCount = (rule, value, callback) => {
                     if(value>9999){
-                        callback(new Error('数量输入过大'));
+                        callback(new Error('数量の入力が多きすぎます'));
                     }else{
                         callback();
                 }
@@ -227,17 +227,17 @@
                     },
                     rules: {
                         name: [
-                            {required: true, message: '请输入物品名', trigger: 'blur'}
+                            {required: true, message: '商品名を入力してください', trigger: 'blur'}
                         ],
                         storage:[
-                            {required: true, message: '请选择仓库', trigger: 'blur'}
+                            {required: true, message: '倉庫を選択してください', trigger: 'blur'}
                         ],
                         goodstype:[
-                            {required: true, message: '请选择分类', trigger: 'blur'}
+                            {required: true, message: 'カテゴリを選択してください', trigger: 'blur'}
                         ],
                         count: [
-                            {required: true, message: '请输入数量', trigger: 'blur'},
-                            {pattern: /^([1-9][0-9]*){1,4}$/,message: '数量必须为正整数字',trigger: "blur"},
+                            {required: true, message: '数量を入力してください', trigger: 'blur'},
+                            {pattern: /^([1-9][0-9]*){1,4}$/,message: '数量は正の整数でなければなりません',trigger: "blur"},
                             {validator:checkCount,trigger: 'blur'}
                         ],
                     }
@@ -285,13 +285,13 @@
                     if(res.code==200){
 
                         this.$message({
-                            message: '操作成功！',
+                            message: '編集成功!',
                             type: 'success'
                         });
                         this.loadPost()
                     }else{
                         this.$message({
-                            message: '操作失败！',
+                            message: '編集失敗！',
                             type: 'error'
                         });
                     }
@@ -308,7 +308,7 @@
             },
             inGoods(){
                 if(!this.currentRow.id){
-                    alert('请选择记录');
+                    alert('レコードを選択してください');
                     return;
                 }
                 this.inDialogVisible = true
@@ -324,7 +324,7 @@
 
             outGoods(){
                 if(!this.currentRow.id){
-                    alert('请选择记录');
+                    alert('レコードを選択してください');
                     return;
                 }
                 this.inDialogVisible = true
@@ -379,7 +379,7 @@
                     console.log(res)
                     if(res.code==200){
                         this.$message({
-                            message: '添加成功！',
+                            message: '追加が成功しました！',
                             type: 'success'
                         });
                         this.centerDialogVisible = false
@@ -387,7 +387,7 @@
                         this.resetForm()
                     }else{
                         this.$message({
-                            message: '添加失败！',
+                            message: '追加が失敗しました！',
                             type: 'error'
                         });
                     }
@@ -413,7 +413,7 @@
                     if(res.code==200){
 
                         this.$message({
-                            message: '操作成功！',
+                            message: '編集成功!',
                             type: 'success'
                         });
                         this.inDialogVisible = false
@@ -421,7 +421,7 @@
                         this. resetInForm()
                     }else{
                         this.$message({
-                            message: '操作失败！',
+                            message: '編集失敗！',
                             type: 'error'
                         });
                     }
@@ -429,13 +429,13 @@
                 })
             },
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                console.log(`ページごと ${val} 項目`);
                 this.pageNum=1
                 this.pageSize=val
                 this.loadPost()
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                console.log(`現在のページ: ${val}`);
                 this.pageNum=val
                 this.loadPost()
             },
@@ -464,7 +464,7 @@
                         this.tableData=res.data
                         this.total=res.total
                     }else{
-                        alert('获取数据失败')
+                        alert('データの取得に失敗しました')
                     }
                 })
             },
@@ -474,7 +474,7 @@
                     if(res.code==200){
                         this.storageData=res.data
                     }else{
-                        alert('获取数据失败')
+                        alert('データの取得に失敗しました')
                     }
 
                 })
@@ -485,7 +485,7 @@
                     if(res.code==200){
                         this.goodstypeData=res.data
                     }else{
-                        alert('获取数据失败')
+                        alert('データの取得に失敗しました')
                     }
 
                 })

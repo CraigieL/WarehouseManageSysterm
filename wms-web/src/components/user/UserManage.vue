@@ -1,9 +1,9 @@
 <template>
   <div>
     <div style="margin: 5px">
-      <el-input v-model="name" placeholder="请输入名字" suffix-icon="el-icon-search" style="width: 180px;margin-left: -4px"
+      <el-input v-model="name" placeholder="名前を入力してください" suffix-icon="el-icon-search" style="width: 180px;margin-left: -4px"
                 @keyup.enter.native="loadPost"></el-input>
-      <el-select v-model="sex" filterable placeholder="请选择性别" style="margin-left: 6px;">
+      <el-select v-model="sex" filterable placeholder="性別を選択してください" style="margin-left: 6px;">
         <el-option
             v-for="item in sexs"
             :key="item.value"
@@ -11,47 +11,47 @@
             :value="item.value">
         </el-option>
       </el-select>
-      <el-button type="primary" style="margin-left: 18px;margin-right: 6px" @click="loadPost">查询</el-button>
-      <el-button type="success" @click="resetParam">重置</el-button>
-      <el-button type="primary" style="margin-left: 16px;margin-right: 6px" @click="add">新增</el-button>
+      <el-button type="primary" style="margin-left: 18px;margin-right: 6px" @click="loadPost">照会</el-button>
+      <el-button type="success" @click="resetParam">リセット</el-button>
+      <el-button type="primary" style="margin-left: 16px;margin-right: 6px" @click="add">追加</el-button>
     </div>
     <el-table :data="tableData"
               :header-cell-style="{ background: '#f2f5fc', color: '#555555' }"
               border>
       <el-table-column prop="id" label="ID" width="60">
       </el-table-column>
-      <el-table-column prop="account" label="账号" width="120">
+      <el-table-column prop="account" label="アカウント" width="120">
       </el-table-column>
-      <el-table-column prop="name" label="姓名" width="180">
+      <el-table-column prop="name" label="氏名" width="120">
       </el-table-column>
-      <el-table-column prop="age" label="年龄" width="60">
+      <el-table-column prop="age" label="年齢" width="60">
       </el-table-column>
-      <el-table-column prop="sex" label="性别" width="60">
+      <el-table-column prop="sex" label="性別" width="80">
         <template slot-scope="scope">
           <el-tag
               :type="scope.row.sex === 1 ? 'primary' : 'success'"
-              disable-transitions>{{scope.row.sex === 1 ? '男' : '女'}}</el-tag>
+              disable-transitions>{{scope.row.sex === 1 ? '男性' : '女性'}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="电话" width="120">
+      <el-table-column prop="phone" label="電話" width="120">
       </el-table-column>
-      <el-table-column prop="roleId" label="角色" width="180">
+      <el-table-column prop="roleId" label="ロール" width="120">
         <template slot-scope="scope">
           <el-tag
               :type="scope.row.roleId === 0 ? 'danger' : (scope.row.roleId === 1 ? 'primary' : 'success')"
-              disable-transitions>{{scope.row.roleId === 0 ? '超级管理员' :
-              (scope.row.roleId === 1 ? '管理员' : '用户')}}</el-tag>
+              disable-transitions>{{scope.row.roleId === 0 ? 'スーパー管理者' :
+              (scope.row.roleId === 1 ? '管理者' : '用者')}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="operate" label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="success" @click="modify(scope.row)">编辑</el-button>
+          <el-button size="small" type="success" @click="modify(scope.row)">編集</el-button>
           <el-popconfirm
-              title="确定删除吗？"
+              title="削除してもよろしいですか？"
               @confirm="del(scope.row.id)"
               style="margin-left: 10px;"
           >
-            <el-button slot="reference" size="small" type="danger">删除</el-button>
+            <el-button slot="reference" size="small" type="danger">削除</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -68,48 +68,48 @@
     </el-pagination>
 
     <el-dialog
-        title="提示"
+        title="ヒント"
         :visible.sync="centerDialogVisible"
-        width="30%"
+        width="32%"
         center>
 
-      <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-        <el-form-item label="账号" prop="account">
+      <el-form ref="form" :rules="rules" :model="form" label-width="100px">
+        <el-form-item label="アカウント" prop="account">
           <el-col :span="20">
             <el-input v-model="form.account"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="氏名" prop="name">
           <el-col :span="20">
             <el-input v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="パスワード" prop="password">
           <el-col :span="20">
             <el-input v-model="form.password"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="年龄" prop="age">
+        <el-form-item label="年齢" prop="age">
           <el-col :span="20">
             <el-input v-model="form.age"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="性别" prop="sex">
+        <el-form-item label="性別" prop="sex">
           <el-radio-group v-model="form.sex">
-            <el-radio label="1">男</el-radio>
-            <el-radio label="0">女</el-radio>
+            <el-radio label="1">男性</el-radio>
+            <el-radio label="0">女性</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="电话" prop="phone">
+        <el-form-item label="電話" prop="phone">
           <el-col :span="20">
             <el-input v-model="form.phone"></el-input>
           </el-col>
         </el-form-item>
-
       </el-form>
+
       <span slot="footer" class="dialog-footer">
-      <el-button @click="centerDialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="save">确 定</el-button>
+      <el-button @click="centerDialogVisible = false">キャンセル</el-button>
+      <el-button type="primary" @click="save">確認</el-button>
     </span>
     </el-dialog>
   </div>
@@ -121,7 +121,7 @@ export default {
   data() {
     let checkAge = (rule, value, callback) => {
       if(value>100){
-        callback(new Error('年龄输入过大'));
+        callback(new Error('年齢入力が大きすぎます'));
       }else{
         callback();
       }
@@ -134,7 +134,7 @@ export default {
         if(res.code!=200){
           callback()
         }else{
-          callback(new Error('账号已经存在'));
+          callback(new Error('アカウントは既に存在しています'));
         }
       })
     }
@@ -149,10 +149,10 @@ export default {
       sexs:[
         {
           value: '1',
-          label: '男'
+          label: '男性'
         }, {
           value: '0',
-          label: '女'
+          label: '女性'
         }
       ],
       centerDialogVisible: false,
@@ -168,26 +168,26 @@ export default {
       },
       rules: {
         account: [
-          {required: true, message: '请输入账号', trigger: 'blur'},
-          {min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur'},
+          {required: true, message: 'アカウントを入力してください', trigger: 'blur'},
+          {min: 3, max: 8, message: '文字数は3から8文字の間である必要があります', trigger: 'blur'},
           {validator:checkDuplicate,trigger: 'blur'}
         ],
         name: [
-          {required: true, message: '请输入名字', trigger: 'blur'}
+          {required: true, message: '名前を入力してください', trigger: 'blur'}
         ],
         password: [
-          {required: true, message: '请输入密码', trigger: 'blur'},
-          {min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur'}
+          {required: true, message: 'パスワードを入力してください', trigger: 'blur'},
+          {min: 3, max: 8, message: '文字数は3から8文字の間である必要があります', trigger: 'blur'}
         ],
         age: [
-          {required: true, message: '请输入年龄', trigger: 'blur'},
-          {min: 1, max: 3, message: '长度在 1 到 3 个位', trigger: 'blur'},
-          {pattern: /^([1-9][0-9]*){1,3}$/,message: '年龄必须为正整数字',trigger: "blur"},
+          {required: true, message: '年齢を入力してください', trigger: 'blur'},
+          {min: 1, max: 3, message: '桁数は1から3桁である必要があります', trigger: 'blur'},
+          {pattern: /^([1-9][0-9]*){1,3}$/,message: '年齢は正の整数でなければなりません',trigger: "blur"},
           {validator:checkAge,trigger: 'blur'}
         ],
         phone: [
-          {required: true,message: "手机号不能为空",trigger: "blur"},
-          {pattern: /^080\d{8}$/, message: "请输入正确的手机号码", trigger: "blur"}
+          {required: true,message: "電話番号は空にできません",trigger: "blur"},
+          {pattern: /^080\d{8}$/, message: "正しい電話番号を入力してください", trigger: "blur"}
         ]
       }
     }
@@ -211,13 +211,13 @@ export default {
         console.log(res)
         if(res.code==200){
           this.$message({
-            message: '删除成功！',
+            message: '削除成功！',
             type: 'success'
           });
           this.loadPost()
         }else{
           this.$message({
-            message: '删除失败！',
+            message: '削除失敗！',
             type: 'error'
           });
         }
@@ -245,7 +245,7 @@ export default {
         console.log(res)
         if(res.code==200){
           this.$message({
-            message: '编辑成功！',
+            message: '編集成功！',
             type: 'success'
           });
           this.centerDialogVisible = false
@@ -253,7 +253,7 @@ export default {
           this.resetForm()
         }else{
           this.$message({
-            message: '编辑失败！',
+            message: '編集失敗！',
             type: 'error'
           });
         }
@@ -264,7 +264,7 @@ export default {
         console.log(res)
         if(res.code==200){
           this.$message({
-            message: '添加成功！',
+            message: '追加成功！',
             type: 'success'
           });
           this.centerDialogVisible = false
@@ -272,7 +272,7 @@ export default {
           this.resetForm()
         }else{
           this.$message({
-            message: '添加失败！',
+            message: '追加失敗！',
             type: 'error'
           });
         }
@@ -293,13 +293,13 @@ export default {
       });
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      console.log(`ページごと ${val} 項目`);
       this.pageNum=1
       this.pageSize=val
       this.loadPost()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      console.log(`現在のページ: ${val}`);
       this.pageNum=val
       this.loadPost()
     },
@@ -328,7 +328,7 @@ export default {
           this.tableData=res.data
           this.total=res.total
         }else{
-          alert('获取数据失败')
+          alert('データの取得に失敗しました')
         }
       })
     }

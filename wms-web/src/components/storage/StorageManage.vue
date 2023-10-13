@@ -1,30 +1,30 @@
 <template>
     <div>
         <div style="margin: 5px">
-            <el-input v-model="name" placeholder="请输入仓库名字" suffix-icon="el-icon-search" style="width: 180px;margin-left: -4px"
+            <el-input v-model="name" placeholder="倉庫の名前を入力してください" suffix-icon="el-icon-search" style="width: 180px;margin-left: -4px"
                       @keyup.enter.native="loadPost"></el-input>
-            <el-button type="primary" style="margin-left: 18px;margin-right: 6px" @click="loadPost">查询</el-button>
-            <el-button type="success" @click="resetParam">重置</el-button>
-            <el-button type="primary" style="margin-left: 16px;margin-right: 6px" @click="add">新增</el-button>
+            <el-button type="primary" style="margin-left: 18px;margin-right: 6px" @click="loadPost">照会</el-button>
+            <el-button type="success" @click="resetParam">リセット</el-button>
+            <el-button type="primary" style="margin-left: 16px;margin-right: 6px" @click="add">追加</el-button>
         </div>
         <el-table :data="tableData"
                 :header-cell-style="{ background: '#f2f5fc', color: '#555555' }"
                 border>
         <el-table-column prop="id" label="ID" width="60">
         </el-table-column>
-        <el-table-column prop="name" label="仓库名" width="120">
+        <el-table-column prop="name" label="倉庫名" width="120">
         </el-table-column>
-        <el-table-column prop="remark" label="备注" width="300">
+        <el-table-column prop="remark" label="備考" width="300">
         </el-table-column>
         <el-table-column prop="operate" label="操作">
             <template slot-scope="scope">
-                <el-button size="small" type="success" @click="modify(scope.row)">编辑</el-button>
+                <el-button size="small" type="success" @click="modify(scope.row)">編集</el-button>
                 <el-popconfirm
-                    title="确定删除吗？"
+                    title="削除してもよろしいですか？"
                     @confirm="del(scope.row.id)"
                     style="margin-left: 10px;"
                 >
-                <el-button slot="reference" size="small" type="danger">删除</el-button>
+                <el-button slot="reference" size="small" type="danger">削除</el-button>
                 </el-popconfirm>
             </template>
         </el-table-column>
@@ -41,18 +41,18 @@
         </el-pagination>
 
         <el-dialog
-            title="提示"
+            title="ヒント"
             :visible.sync="centerDialogVisible"
             width="30%"
             center>
 
             <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-                <el-form-item label="仓库名" prop="name">
+                <el-form-item label="倉庫名" prop="name">
                     <el-col :span="20">
                         <el-input v-model="form.name"></el-input>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="备注" prop="remark">
+                <el-form-item label="備考" prop="remark">
                     <el-col :span="20">
                         <el-input type="textarea" v-model="form.remark"></el-input>
                     </el-col>
@@ -60,8 +60,8 @@
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button @click="centerDialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="save">确 定</el-button>
+            <el-button @click="centerDialogVisible = false">キャンセル</el-button>
+            <el-button type="primary" @click="save">確定</el-button>
         </span>
         </el-dialog>
     </div>
@@ -85,7 +85,7 @@
                     },
                     rules: {
                         name: [
-                            {required: true, message: '请输入仓库名', trigger: 'blur'}
+                            {required: true, message: '倉庫の名前を入力してください', trigger: 'blur'}
                         ],
                     }
                 }
@@ -109,13 +109,13 @@
                     console.log(res)
                     if(res.code==200){
                         this.$message({
-                            message: '删除成功！',
+                            message: '削除成功！',
                             type: 'success'
                         });
                         this.loadPost()
                     }else{
                         this.$message({
-                            message: '删除失败！',
+                            message: '削除失敗！！',
                             type: 'error'
                         });
                     }
@@ -138,7 +138,7 @@
                     console.log(res)
                     if(res.code==200){
                         this.$message({
-                            message: '编辑成功！',
+                            message: '編集成功！',
                             type: 'success'
                         });
                         this.centerDialogVisible = false
@@ -146,7 +146,7 @@
                         this.resetForm()
                     }else{
                         this.$message({
-                            message: '编辑失败！',
+                            message: '編集失敗！',
                             type: 'error'
                         });
                     }
@@ -157,7 +157,7 @@
                     console.log(res)
                     if(res.code==200){
                         this.$message({
-                            message: '添加成功！',
+                            message: '追加成功！',
                             type: 'success'
                         });
                         this.centerDialogVisible = false
@@ -165,7 +165,7 @@
                         this.resetForm()
                     }else{
                         this.$message({
-                            message: '添加失败！',
+                            message: '追加失敗！',
                             type: 'error'
                         });
                     }
@@ -186,13 +186,13 @@
                 });
             },
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                console.log(`ページごと ${val} 項目`);
                 this.pageNum=1
                 this.pageSize=val
                 this.loadPost()
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                console.log(`現在のページ: ${val}`);
                 this.pageNum=val
                 this.loadPost()
             },
@@ -217,7 +217,7 @@
                         this.tableData=res.data
                         this.total=res.total
                     }else{
-                        alert('获取数据失败')
+                        alert('データの取得に失敗しました')
                     }
                 })
             }
