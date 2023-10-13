@@ -11,7 +11,7 @@
     >
         <el-menu-item index="/Home">
           <i class="el-icon-s-home"></i>
-          <span slot="title">首页</span>
+          <span slot="title">トップページ</span>
         </el-menu-item>
 
         <el-menu-item :index="'/'+item.menuclick" v-for="(item,i) in menu" :key="i">

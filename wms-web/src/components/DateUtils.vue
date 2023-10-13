@@ -1,7 +1,7 @@
 <template >
     <div style="padding: 30px;font-size: 30px;">
         <span class="time" id="time" >
-            今天是：<span class="date">{{ nowTime }}</span>
+            今日は：<span class="date">{{ nowTime }}</span>
             <span class="hour" style="margin-left: 5px;">{{time.hour}}</span>
             <a class="split">:</a>
             <span class="minitus">{{time.minitus}}</span>
@@ -24,13 +24,13 @@
                 },
                 nowTime: "",
                 week: [
-                    "星期天",
-                    "星期一",
-                    "星期二",
-                    "星期三",
-                    "星期四",
-                    "星期五",
-                    "星期六"
+                    "日曜日",
+                    "月曜日",
+                    "火曜日",
+                    "水曜日",
+                    "木曜日",
+                    "金曜日",
+                    "土曜日"
                 ]
             };
         },

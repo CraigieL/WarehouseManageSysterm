@@ -13,6 +13,9 @@ Vue.prototype.$httpUrl='http://localhost:8090'
 Vue.config.productionTip = false
 Vue.use(ElementUI,{size:'small'});
 Vue.use(VueRouter);
+import lang from 'element-ui/lib/locale/lang/ja'
+    import locale from 'element-ui/lib/locale'
+    locale.use(lang)
 
 new Vue({
   router,
