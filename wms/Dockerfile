@@ -1,5 +1,5 @@
 # 基于 Java 17 基础镜像
-FROM openjdk:173-jdk
+FROM openjdk:17-jdk
 # 设定时区
 ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
