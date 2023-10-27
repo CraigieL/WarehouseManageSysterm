@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  wmssboot:
+    build:
+      context: ./wms
+      dockerfile: Dockerfile
+    container_name: wmssboot
+    hostname: wmssboot
+    ports:
+      - "8083:8083"
+    networks:
+      - wmsnet
+
+  wmsvue:
+    build:
+      context: ./wms-web
+      dockerfile: Dockerfile
+    container_name: wmsvue
+    ports:
+      - "8082:80"
+    networks:
+      - wmsnet
+    depends_on:
+      - wmssboot
+
+networks:
+  wmsnet:
+    driver: bridge
