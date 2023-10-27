@@ -9,7 +9,8 @@ import router from './router';
 import store from './store'
 
 Vue.prototype.$axios=axios;
-Vue.prototype.$httpUrl='http://wmssboot:8083'
+// Vue.prototype.$httpUrl='http://localhost:8083'//本地运行配置
+Vue.prototype.$httpUrl='http://localhost:8082'//Docker化运行配置
 Vue.config.productionTip = false
 Vue.use(ElementUI,{size:'small'});
 Vue.use(VueRouter);
